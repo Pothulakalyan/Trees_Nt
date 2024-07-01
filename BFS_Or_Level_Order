@@ -1,0 +1,69 @@
+#include<bits/stdc++.h>
+using namespace std;
+class Node{
+    public:
+        Node*left;
+        int data;
+        Node* right;
+        
+        Node(int val){
+            left=nullptr;
+            data=val;
+            right=nullptr;
+        }
+};
+void level_Order_traversal(Node* root){
+    if(root==NULL) return;
+    //queue datastructure is used for BFS
+    queue<Node*>q;
+    //i was take 2D vector because for  my understanding how many levels that binary tree have 
+    vector<vector<int>>ve;
+    //initiall push my root in queue
+    q.push(root);
+    //thats way queue is not empty
+    while(!q.empty()){
+        //finding current size of queue
+        int si=q.size();
+        // here take one vector for data purpose
+        vector<int>v1;
+        //iterate untill the size of the queue
+        for(int i=0;i<si;i++){
+            // i was bring which  node comes first  
+            Node* temp=q.front();
+            //once i was get the first node in queue then pop it 
+            q.pop();
+            //finding if any left node having current node. if its exist then keep in queue 
+            if(temp->left!=NULL)
+                q.push(temp->left);
+            //finding if any right node having current node. if its ex the keep in queue
+            if(temp->right!=NULL)
+                q.push(temp->right);
+            //after that add the current node of data to my vector
+            v1.push_back(temp->data);
+        }
+        //whenever my queue is empty then return my answer
+        ve.push_back(v1);
+        
+    }
+    for(int i=0;i<ve.size();i++){
+        for(int j=0;j<ve[i].size();j++){
+            if(j==0){
+                 cout<<i+1<<"->"<<"level"<<" ";
+            }
+            cout<<ve[i][j]<<" ";
+            
+        }
+        cout<<endl;
+    }
+}
+int main(){
+    Node* root=new Node(1);
+    root->left=new Node(2);
+    root->right=new Node(3);
+    root->left->left=new Node(4);
+    root->left->right=new Node(5);
+    root->right->left=new Node(6);
+    root->right->right=new Node(7);
+    level_Order_traversal(root);
+    
+}
